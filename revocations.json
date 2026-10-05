@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "package": "@volter/twin-rollout-test-tavily",
+    "version": "0.0.1",
+    "reason": "Public test rehearsal: verify future-default withdrawal while retaining existing explicit World pins."
+  }
+]
