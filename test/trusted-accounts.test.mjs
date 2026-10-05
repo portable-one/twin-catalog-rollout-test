@@ -61,6 +61,14 @@ test('publication accepts a directly trusted fork author without review and reco
     }
   };
   assert.deepEqual((await verifyAdmission(root, github))[0].moderation, { mode: 'trusted-account-merge', mergedBy: 'maintainer', account });
+  const legacyReceipt = check.external_id;
+  check.external_id = `${legacyReceipt}:37370945933:2`;
+  assert.deepEqual((await verifyAdmission(root, github))[0].workflow, { run: 37370945933, attempt: 2 });
+  for (const suffix of ['0:1', 'abc:2', '37370945933:0', '9007199254740992:1', '37370945933:2:extra']) {
+    check.external_id = `${legacyReceipt}:${suffix}`;
+    await assert.rejects(verifyAdmission(root, github), /readiness/);
+  }
+  check.external_id = legacyReceipt;
   permission = 'write';
   await assert.rejects(verifyAdmission(root, github), /no reviewed current-head admission/);
   permission = 'admin';
