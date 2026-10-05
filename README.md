@@ -59,6 +59,8 @@ The website and hosted runtime consume this artifact independently; publishing i
 
 ## Operate admission
 
+The [operator procedure](docs/operations.md) covers phase diagnostics, retained-byte confirmation, assessment/index retries, recommendation and revocation, publication pause and credential replacement.
+
 `policy.json` pins released evaluator versions and the registry. Policy changes are separate moderator-reviewed PRs.
 The evaluator requires Docker on Linux with an x86-64 runner (the pinned Bun binary is linux-x64). Reports record the actual image identity and dependency lock, PR head/base,
 and policy identity. Docker network isolation applies to evaluation; preparation downloads npm packages and

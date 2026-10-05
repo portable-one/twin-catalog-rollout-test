@@ -95,6 +95,11 @@ never the contributor's head. Source-registration and maintenance PRs do not exe
 extraction, dependency installation and evaluation occur in disposable containers with no repository, npm, cloud,
 moderation or publication credentials, no Docker socket and no host project mounts. Install scripts are disabled.
 Dependencies are resolved once into a recorded lock; evaluation reuses that installation with network disabled.
+Before dependency installation, preparation confirms the candidate's exact version and integrity in npm's
+installation metadata as well as its exact-version metadata. These registry views may propagate separately.
+Only HTTP 404 or an otherwise valid package document without that version is retried, using the existing measured
+registry confirmation window. HTTP errors, malformed identities and conflicting integrity fail immediately.
+Confirmation performs reads only; it never uploads, grants readiness or retries candidate installation scripts.
 Input data is readable by the container's unprivileged user. Setup and preparation failures produce a failed JSON
 envelope as well as diagnostics; neither can establish readiness. Owner-dispatched verification walks a synthetic
 browser transport fixture through the same offline boundary before assessing an actual artifact. The fixture checks
