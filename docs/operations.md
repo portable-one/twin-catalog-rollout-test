@@ -4,7 +4,7 @@ This procedure applies to `volter-ai/twin-catalog-rollout-test` and its trusted 
 
 ## Responsibilities and access
 
-`CODEOWNERS` and repository permissions name the moderators; current policy names `yueranyuan` for internal maintainer merges. The operator records an incident owner and GitHub failure-notification recipients in the handoff. Repository ownership alone does not prove notifications are configured. An outside contributor and a distinct authorized human moderator are required for an outside pilot.
+`CODEOWNERS` and repository permissions name the moderators; current policy names `yueranyuan` for internal maintainer merges. The operator records an incident owner and GitHub failure-notification recipients in the handoff. Repository ownership alone does not prove notifications are configured. An untrusted outside contributor and a distinct authorized human moderator are required to rehearse the outside review path. A trusted-account rehearsal does not require that review.
 
 The catalog read App has administration, contents, checks and pull-request read access to the selected catalog. Its key is in `CATALOG_READ_APP_PRIVATE_KEY`; its client ID is a repository variable. The separate publisher App has contents and pull-request write access, without administration; its key is in `CATALOG_PR_APP_PRIVATE_KEY` in the trusted publisher. Both workflows mint target-scoped short-lived tokens and revoke them afterward. Contributors use their own GitHub and npm authority, never these keys. Registry publication uses trusted publishing or the configured `NPM_TOKEN`. Production credential scope is a separate activation decision.
 
@@ -53,7 +53,7 @@ gh workflow run check.yml --repo volter-ai/twin-catalog-rollout-test --ref main 
 
 The job uses trusted current source and reads candidate data at the exact head. A changed head or base needs fresh evidence. Check the resulting report and current-head readiness; an older success or local report is insufficient. Candidate defects need a new immutable package version. The automation neither approves nor merges.
 
-Outside submissions need a genuine current-head non-author human moderator approval. Internal eligible changes may use the named maintainer exception, but still require current-head readiness. Never use administrator merge to bypass missing outside review or a failed check.
+Untrusted-account submissions need genuine current-head non-author human moderator approval. Direct trusted-account contributions, including forks, and eligible internal changes may use the named maintainer exception; every path still requires current-head readiness. Verify the author against `policy.trustedAccounts` using GitHub ID, login and type. Never use administrator merge to bypass missing untrusted-account review or a failed check.
 
 ## Recover index publication
 

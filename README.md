@@ -33,9 +33,9 @@ an offline container and a World, and updates one feedback comment. Download the
 the workflow artifacts; admitted reports also have a durable evidence release and an index-package copy. Code fixes require a new published version and updated submission filename. Do not edit the
 index, policy or source registration as part of a release submission.
 
-Passing automation means ready for a maintainer decision. Outside submissions require moderator review of the exact
-head before merge; the internal admission path below permits an authorized maintainer merge without a separate
-review. The catalog does not approve or merge itself. A rejection is a closed PR with a reason. Moderators are named
+Passing automation means ready for a maintainer decision. Untrusted-account submissions require moderator review
+of the exact head before merge. Direct trusted-account submissions, including forks, and eligible internal publisher
+submissions permit an authorized maintainer merge without a separate review. The catalog does not approve or merge itself. A rejection is a closed PR with a reason. Moderators are named
 in `.github/CODEOWNERS`.
 
 ## Consume the index
@@ -79,9 +79,11 @@ Ordinary commands never modify these settings. Source and catalog repositories m
 publication needs npm trusted publishing or the workflow's scoped `NPM_TOKEN`. These are activation prerequisites,
 not changes performed by implementing this process.
 
-`policy.reviewBypassUsers` names maintainers allowed to merge internal changes without a separate review.
-`policy.internalRepositories` lists the registered pack repositories eligible for that admission path. Outside
-publishers still need human review; all admissions need verified provenance and current-head readiness.
+`policy.reviewBypassUsers` names maintainers allowed to merge direct trusted-account and internal changes without
+a separate review. `policy.trustedAccounts` binds direct PR authors by GitHub numeric ID, exact login and account
+type, including contributions from forks. `policy.internalRepositories` separately lists registered pack repositories
+eligible for the internal publisher path. Untrusted accounts still need human review; all admissions need verified
+provenance and current-head readiness. The [process contract](docs/process.md) defines these admission paths.
 `policy.internalBotAuthors` binds each trusted publisher bot by GitHub user ID and exact login. It grants no
 exception without the internal source, same-catalog PR and authorized maintainer merge.
 
