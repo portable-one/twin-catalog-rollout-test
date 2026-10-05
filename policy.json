@@ -21,5 +21,17 @@
   ],
   "internalRepositories": [
     "volter-ai/twin-packs-rollout-test"
+  ],
+  "trustedAccounts": [
+    {
+      "id": 2255943,
+      "login": "yueranyuan",
+      "type": "User"
+    },
+    {
+      "id": 253602084,
+      "login": "portable-one",
+      "type": "User"
+    }
   ]
 }

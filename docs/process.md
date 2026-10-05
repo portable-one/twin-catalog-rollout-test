@@ -13,10 +13,17 @@ with a SHA-512 integrity value. A source is a registered GitHub repository, npm 
 One repository may publish several packages. Several repositories may implement the same vendor. Package names are
 not vendor identities. Version ordering applies only within one package, never between competing implementations.
 
-`sources.json` registers sources. Registration is its own moderator-reviewed PR; a submission cannot grant its source
+`sources.json` registers sources. Registration is its own separately authorized PR; a submission cannot grant its source
 trust, change evaluation tools, or change catalog policy. `official` identifies Volter maintenance, not a verification
-exemption or vendor endorsement. Every new release follows the same readiness requirements. Outside contributions
-require current-head human moderator approval. Maintainers may merge their own changes without a separate review.
+exemption or vendor endorsement. Every new release follows the same readiness requirements. Contributions from untrusted accounts
+require current-head human moderator approval. Direct submissions from an account explicitly listed in
+`policy.trustedAccounts` need no separate moderator review, including fork PRs. Each entry binds the numeric
+GitHub account ID, exact login and account type (`User` or `Bot`). Trust is checked against the PR author returned
+by GitHub, never a commit author, fork owner, organization membership or submission field. A maintainer named in
+`policy.reviewBypassUsers`, with current `admin` or `maintain` permission, merges after current-head readiness.
+Publication records this path as `trusted-account-merge` with the submitting account identity; it does not claim
+human review. Trust does not exempt source registration, artifact integrity, provenance or assessment.
+Maintainers may merge their own changes without a separate review.
 Internal admissions require the registered repository to be explicitly listed in `policy.internalRepositories`,
 a PR branch in this catalog repository, and a merge by a maintainer named in `policy.reviewBypassUsers` whose current
 GitHub permission is `admin` or `maintain`. The author must be a repository member/collaborator or its GitHub Actions
@@ -76,8 +83,8 @@ cannot select its own evaluator, thresholds, registry, commands or privileges.
 Readiness is not approval. Catalog assessment never approves or merges. Review dismissal on new commits, required current-head checks,
 CODEOWNERS review and a branch rule requiring the branch to be current enforce the decision. A moderator's identity
 comes from GitHub review and merge events, never a contributor's `by` string. Self-approval is not accepted as review.
-Named maintainers have a review bypass for internal changes; outside admissions still need human review, and both
-paths need current-head readiness. Publication records which admission path and merger established authority.
+Named maintainers have a review bypass for internal changes and direct trusted-account contributions; untrusted
+admissions still need human review. Every path needs current-head readiness. Publication records which admission path and merger established authority.
 The repository's installation command checks/configures these rules explicitly; merely committing a workflow is not
 evidence that they are enabled. No credentials or repository settings are changed by an ordinary build.
 
@@ -256,11 +263,12 @@ uses synthetic inputs where possible and never real publication:
 4. Changed bytes, package identity, vendor facts, provenance, head, base or evaluator invalidate the corresponding
    assessment. Failed, cancelled or missing checks never become ready or admitted.
 5. Empty/mismatching replay fails; passing checks and partial surface remain separate measurements.
-6. Outside admissions require current-head human moderator review after readiness; approval of an old head and
-   contributor-supplied reviewer names cannot admit a release. Internal admissions may omit a separate review only
-   for an explicitly trusted source, a same-repository PR and an authorized maintainer merge with verified current
-   permission. Both paths require current-head readiness; a bot author or official badge alone grants no exemption.
-   Automation has no merge path.
+6. Untrusted-account admissions require current-head human moderator review after readiness; approval of an old head
+   and contributor-supplied reviewer names cannot admit a release. A directly trusted account may omit a separate
+   review, including from a fork; account ID, exact login and type must match policy. The separate internal publisher
+   path needs an explicitly trusted source and a same-repository PR. Both exceptions require a named authorized
+   maintainer merge with verified current permission. Every path requires current-head readiness; fork ownership,
+   a bot author or an official badge alone grants no exemption. Catalog workflows have no merge path.
 7. Merging adds one immutable release, preserves other publishers and pins, and produces an index without a platform
    checkout, hosted build or website.
 8. Publication retry is idempotent; a conflicting published identity fails, and a revoked release is not recommended.

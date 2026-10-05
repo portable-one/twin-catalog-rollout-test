@@ -60,7 +60,7 @@ postinstall having run there: distribute the needed portable build or choose sup
 
 ## Register and publish
 
-Register your public repository, npm scope and release workflow in a separate moderator-reviewed `sources.json` PR.
+Register your public repository, npm scope and release workflow in a separate authorized `sources.json` PR; untrusted accounts need moderator review.
 Pin your own dependencies and commit the lock. Your workflow runs on GitHub-hosted Linux with `id-token: write`,
 builds your artifact, and uses npm trusted publishing or your own scoped npm credential:
 
@@ -76,5 +76,7 @@ twin-catalog submit --source example-team --vendor stripe --package @example/pay
 ```
 
 Open a PR adding only its generated submission. The Actions job checks the registry artifact at the exact integrity,
-using catalog policy and released tools, then posts evidence for moderator review. Fixes need a new immutable release;
-infrastructure failures can be retried. Moderators review and merge; the publisher and catalog bots do neither.
+using catalog policy and released tools, then posts readiness evidence. Untrusted accounts need moderator review;
+directly trusted accounts need no separate review. The [process contract](process.md) defines account trust and
+maintainer authority. Fixes need a new immutable release; infrastructure failures can be retried. Authorized
+maintainers merge; the publisher and catalog workflows do not.
