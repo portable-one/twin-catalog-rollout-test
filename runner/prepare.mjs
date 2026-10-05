@@ -7,11 +7,11 @@ import { x } from 'tar';
 import semver from 'semver';
 import { verify as verifyBundle } from 'sigstore';
 import { read, write, requireThat, digest } from '../lib/model.mjs';
-import { metadata, registryURL, verifyArtifact, verifiedProvenance } from '../lib/registry.mjs';
+import { metadata, installationMetadata, registryURL, verifyArtifact, verifiedProvenance } from '../lib/registry.mjs';
 
 const input = read('/input/input.json');
 const { submission: s, source, policy } = input;
-const doc = await metadata(s.package, s.version, policy.registry);
+const doc = await metadata(s.package, s.version, policy.registry, fetch, {});
 requireThat(doc.dist?.attestations?.url, 'npm provenance required; this version has no attestation');
 const tarResponse = await fetch(registryURL(doc.dist.tarball, policy.registry), { redirect: 'error' });
 requireThat(tarResponse.ok, `tarball: HTTP ${tarResponse.status}`);
@@ -41,6 +41,7 @@ const standardManifest = read('/opt/catalog/node_modules/@volter/twin-standard/p
 const dependencies = { ...standardManifest.devDependencies, ...pack.devDependencies, ...policy.tools, [s.package]: s.version };
 requireThat(!Object.hasOwn(policy.tools, s.package), 'submission collides with evaluator tooling');
 write('/work/package.json', { name: 'catalog-assessment', private: true, dependencies });
+await installationMetadata(s, policy.registry);
 const npm = (args) => {
   const r = spawnSync('npm', [...args, '--registry', policy.registry], { cwd: '/work', encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
   requireThat(r.status === 0, `npm ${args[0]} failed: ${r.stderr || r.stdout}`);
