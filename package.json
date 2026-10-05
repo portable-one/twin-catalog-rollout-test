@@ -1,0 +1,33 @@
+{
+  "name": "@volter/twin-catalog-rollout-test",
+  "version": "0.1.0",
+  "description": "The moderated twin distribution: approved versions and submission tooling for independent publishers.",
+  "type": "module",
+  "bin": {
+    "twin-catalog": "bin/twin-catalog.mjs"
+  },
+  "engines": {
+    "node": ">=22.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volter-ai/twin-catalog-rollout-test.git"
+  },
+  "author": "Volter (https://github.com/volter-ai)",
+  "license": "Apache-2.0",
+  "files": [
+    "sources.json",
+    "vendors",
+    "README.md",
+    "LICENSE",
+    "catalog.json",
+    "recommendations.json",
+    "revocations.json",
+    "policy.json",
+    "bin",
+    "lib",
+    "runner",
+    "docs",
+    "evidence"
+  ]
+}
