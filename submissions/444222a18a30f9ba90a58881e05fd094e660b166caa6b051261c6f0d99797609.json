@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "source": "twin-packs-rollout-test",
+  "vendor": "tavily",
+  "package": "@volter/twin-rollout-test-tavily",
+  "version": "0.0.2",
+  "integrity": "sha512-1/OvlfS0oaCS4QLTfG4NMUgnVi3Zmyla2R+tyLcYas1WCkxPSMmVVTZ6CdwZ5QPA8q0cOUqRwMhkndJHGPpxxQ=="
+}
