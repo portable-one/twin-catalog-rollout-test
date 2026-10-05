@@ -175,10 +175,13 @@ never automatic selections. A missing or failing assessment is never inferred fr
 A future catalog page groups implementations under a vendor, attributes the repository and publisher, and links to
 the immutable version and admission PR/evidence. It can display readiness, support counts, journey failures and replay
 results separately. A contributor sees the PR check, one updated feedback comment, and downloadable workflow artifacts.
-Readiness checks commit the report digest in their external receipt. After approved merge, the publisher validates
-the workflow either from its run URL or GitHub's check-suite/run association when GitHub returns a check URL.
-It requires the trusted readiness workflow, matching suite and head, and the report's bound input identity;
-an unrelated workflow or substituted artifact cannot supply evidence. The publisher then validates
+Readiness checks bind the report digest, workflow run ID and attempt in their external receipt. GitHub may replace
+the display URL and attach a manually dispatched check to an older PR check suite; that display association is not
+the report's source. After authorized merge, publication fetches the exact recorded workflow attempt and requires
+success, the trusted readiness workflow, and the report's bound input identity. A manual dispatch runs at the bound
+trusted base; a pull-request-target run names the submitted head. Older receipts retain their validated run URL or
+unique check-suite/head association. An unrelated workflow, source commit, attempt or substituted artifact cannot
+supply evidence. The publisher then validates
 the report against that receipt and stores it in a GitHub evidence release and in the index package's `evidence/`.
 Reports include the resolved dependency lock. Workflow logs remain supplementary artifacts with configured retention.
 If evidence expires before its first durable copy, publication refuses; it never reconstructs a passing report.
