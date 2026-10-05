@@ -75,9 +75,9 @@ cannot select its own evaluator, thresholds, registry, commands or privileges.
 | Submitted | A release PR with valid data | Automation resolves the artifact |
 | Checking | Current-head readiness check in progress | Automation evaluates |
 | Changes needed | Validation, evaluation or replay failed | Contributor updates and resubmits |
-| Ready for review | Required checks passed for this head and policy | Moderator inspects evidence |
-| Approved | Outside admission has authorized current-head review; required checks still current | Moderator merges |
-| Admitted | Authorized merge on protected main through external review or the internal maintainer path | Publication builds the index |
+| Ready | Required checks passed for this head and policy | Untrusted authors obtain moderator approval; trusted accounts proceed to authorized maintainer merge |
+| Approved | Required checks remain current; untrusted authors have current-head review, or an explicit trusted-account/internal exception applies | Authorized maintainer merges |
+| Admitted | Authorized merge on protected main through human review, trusted-account admission or the internal maintainer path | Publication builds the index |
 | Rejected | Moderator closes the PR with a reason | New submission if corrected |
 
 Readiness is not approval. Catalog assessment never approves or merges. Review dismissal on new commits, required current-head checks,
